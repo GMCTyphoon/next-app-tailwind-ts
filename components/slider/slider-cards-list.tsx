@@ -7,7 +7,7 @@ import imageThree from '@/assets/3.png';
 import imageFour from '@/assets/4.png';
 import imageFive from '@/assets/5.png';
 import imageSix from '@/assets/6.png';
-import useWindowSize from '@/app/hooks/useWindowSize';
+import useWindowSize from '@/hooks/useWindowSize';
 
 export const CARDS = [
   {

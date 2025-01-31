@@ -3,8 +3,8 @@
 import { FC, useState } from 'react';
 
 import { Pangination } from './pangination';
-import { ScrollButton } from '@/app/UI/scroll-button';
-import useWindowSize from '@/app/hooks/useWindowSize';
+import { ScrollButton } from '@/UI/scroll-button';
+import useWindowSize from '@/hooks/useWindowSize';
 import { CARDS, SliderCardsList } from './slider-cards-list';
 
 enum Direction {

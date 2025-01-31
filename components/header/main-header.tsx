@@ -7,7 +7,7 @@ import { FC, useState } from 'react';
 import logoImg from '@/assets/logo.png';
 import authImg from '@/assets/authImg.png';
 import { NavLink } from './nav-link';
-import useWindowSize from '@/app/hooks/useWindowSize';
+import useWindowSize from '@/hooks/useWindowSize';
 
 export const MainHeader: FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -27,7 +27,7 @@ export const MainHeader: FC = () => {
       <nav>
         <button
           onClick={toggleMenu}
-          className="md:hidden focus:outline-none  text-[#F3F3F3] px-2 py-1 rounded bg-[#121212]"
+          className="md:hidden focus:outline-none  text-[#F3F3F3] px-2 py-1 rounded bg-[#121212] hover:scale-125 active:scale-110"
         >
           Меню
         </button>
