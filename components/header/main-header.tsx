@@ -7,7 +7,7 @@ import { FC, useState } from 'react';
 import logoImg from '@/assets/logo.png';
 import authImg from '@/assets/authImg.png';
 import { NavLink } from './nav-link';
-import useWindowSize from '@/hooks/useWindowSize';
+import useWindowSize from '@/app/hooks/useWindowSize';
 
 export const MainHeader: FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

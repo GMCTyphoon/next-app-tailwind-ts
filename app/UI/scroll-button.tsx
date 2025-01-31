@@ -15,9 +15,9 @@ export const ScrollButton: FC<PropsWithChildren<ScrollButtonProps>> = ({
   let buttonClasses =
     'relative z-[1] flex w-0 items-center justify-center border-0 bg-none p-0 text-center hover:scale-110 active:scale-125';
   if (direction === 'right') {
-    buttonClasses += ' right-10';
+    buttonClasses += ' right-5';
   } else {
-    buttonClasses += ' left-10';
+    buttonClasses += ' left-5';
   }
 
   return (
