@@ -7,8 +7,9 @@ import imageThree from '@/assets/3.png';
 import imageFour from '@/assets/4.png';
 import imageFive from '@/assets/5.png';
 import imageSix from '@/assets/6.png';
+import useWindowSize from '@/hooks/useWindowSize';
 
-export const cards = [
+export const CARDS = [
   {
     id: 1,
     title: 'Анализ текущего состояния карьеры',
@@ -55,13 +56,17 @@ interface SliderCardsListProps {
 }
 
 export const SliderCardsList: FC<SliderCardsListProps> = ({ currentPage }) => {
+  const { windowWidth } = useWindowSize();
   return (
     <ul className="flex gap-0 md:gap-4" id="ul">
-      {cards.map((card, index) => (
+      {CARDS.map((card, index) => (
         <li
           key={index}
           style={{
-            transform: `translateX(-${(currentPage - 1) * 100}%)`,
+            transform:
+              windowWidth < 768
+                ? `translateX(-${(currentPage - 1) * 100}%)`
+                : `translateX(0%)`,
           }}
           id={`li-${card.id}`}
           className={`md:snap-start snap-center flex-shrink-0 w-[358px] md:flex md:w-[412px] flex transition-transform duration-500 ease-in-out`}

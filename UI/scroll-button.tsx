@@ -1,4 +1,5 @@
-import { FC, ReactNode } from 'react';
+'use client';
+import { FC, PropsWithChildren, ReactNode } from 'react';
 
 interface ScrollButtonProps {
   direction: string;
@@ -6,20 +7,22 @@ interface ScrollButtonProps {
   onClick: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export const ScrollButton: FC<ScrollButtonProps> = ({
+export const ScrollButton: FC<PropsWithChildren<ScrollButtonProps>> = ({
   direction,
   children,
   ...props
 }) => {
+  let buttonClasses =
+    'relative z-[1] flex w-0 items-center justify-center border-0 bg-none p-0 text-center hover:scale-110 active:scale-125';
+  if (direction === 'right') {
+    buttonClasses += ' right-10';
+  } else {
+    buttonClasses += ' left-10';
+  }
+
   return (
-    <>
-      <div
-        className={`relative z-[1] flex w-0 items-center justify-center border-0 bg-none p-0 text-center hover:scale-110 active:scale-125 transition-all ${direction}-5`}
-      >
-        <button {...props}>
-          <span>{children}</span>
-        </button>
-      </div>
-    </>
+    <button {...props} className={buttonClasses}>
+      <span>{children}</span>
+    </button>
   );
 };

@@ -3,13 +3,18 @@
 import { FC, useState } from 'react';
 
 import { Pangination } from './pangination';
-import { ScrollButton } from '../../UI/scroll-button';
+import { ScrollButton } from '@/UI/scroll-button';
 import useWindowSize from '@/hooks/useWindowSize';
-import { cards, SliderCardsList } from './slider-cards-list';
+import { CARDS, SliderCardsList } from './slider-cards-list';
+
+enum Direction {
+  left = 'left',
+  right = 'right',
+}
 
 export const Slider: FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = cards.length;
+  const totalPages = CARDS.length;
   const { windowWidth } = useWindowSize();
 
   const handlePageChange = (page: number) => {
@@ -18,35 +23,42 @@ export const Slider: FC = () => {
     }
   };
 
-  const handleScroll = (direction: string) => {
-    if (windowWidth >= 768) {
-      const sliderEl = document.getElementById('slider');
-      const cardEl = document.getElementById(`card-1`);
-      const elWidth = cardEl!.getBoundingClientRect().width;
+  const isMobile = windowWidth < 768;
+  const handleScroll = (direction: Direction) => {
+    return isMobile ? mobileScroll(direction) : desktopScroll(direction);
+  };
 
-      sliderEl!.scrollBy({
-        top: 0,
-        left: direction === 'right' ? +elWidth : -elWidth,
-        behavior: 'smooth',
-      });
-    } else {
-      if (direction === 'right') {
+  const desktopScroll = (direction: Direction) => {
+    const sliderEl = document.getElementById('slider');
+    const cardEl = document.getElementById(`card-1`);
+
+    if (!cardEl || !sliderEl) {
+      console.error('Required elements not found!');
+      return;
+    }
+
+    const elWidth = cardEl.getBoundingClientRect().width;
+
+    sliderEl.scrollBy({
+      top: 0,
+      left: direction === Direction.right ? elWidth : -elWidth,
+      behavior: 'smooth',
+    });
+  };
+
+  const mobileScroll = (direction: Direction) => {
+    switch (direction) {
+      case Direction.right:
         setCurrentPage((prev) => {
-          if (prev < totalPages) {
-            return prev + 1;
-          } else {
-            return 1;
-          }
+          const isLastElement = prev === totalPages;
+          return isLastElement ? 1 : prev + 1;
         });
-      } else {
+        break;
+      case Direction.left:
         setCurrentPage((prev) => {
-          if (prev > 1) {
-            return prev - 1;
-          } else {
-            return totalPages;
-          }
+          const isFirstElement = prev === 1;
+          return isFirstElement ? totalPages : prev - 1;
         });
-      }
     }
   };
 
@@ -57,11 +69,11 @@ export const Slider: FC = () => {
         currentPage={currentPage}
         onPageChange={handlePageChange}
       />
-      <div className="flex p-4 justify-center md:justify-start w-auto">
+      <div className="flex p-4 justify-center md:justify-start w-full">
         <ScrollButton
-          direction="left"
+          direction={Direction.left}
           onClick={() => {
-            handleScroll('left');
+            handleScroll(Direction.left);
           }}
         >
           <svg
@@ -85,7 +97,10 @@ export const Slider: FC = () => {
         >
           <SliderCardsList currentPage={currentPage} />
         </div>
-        <ScrollButton direction="right" onClick={() => handleScroll('right')}>
+        <ScrollButton
+          direction={Direction.right}
+          onClick={() => handleScroll(Direction.right)}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
